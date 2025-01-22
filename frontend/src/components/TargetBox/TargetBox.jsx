@@ -1,4 +1,5 @@
 import style from './TargetBox.module.css';
+import PropTypes from 'prop-types';
 
 export default function TargetBox({ x, y, imageRef }) {
   console.log('targetBox... x, y', x, y);
@@ -18,3 +19,9 @@ export default function TargetBox({ x, y, imageRef }) {
     ></div>
   );
 }
+
+TargetBox.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  imageRef: PropTypes.object,
+};
