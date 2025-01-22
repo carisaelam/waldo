@@ -20,7 +20,6 @@ function App() {
         onImageClick={(x, y) => moveTargetBox(x, y)}
         targetBoxCoords={targetBoxCoords}
       />
-      ;
     </div>
   );
 }

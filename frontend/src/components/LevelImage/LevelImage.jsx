@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { getNormalizedCoordinates } from '../../utils/CoordinateUtils';
+import TargetBox from '../TargetBox/TargetBox';
+import style from './LevelImage.module.css';
 
 export default function LevelImage({
   src,
@@ -8,6 +10,7 @@ export default function LevelImage({
   targetBoxCoords = [0, 0],
 }) {
   console.log('targetBoxCoords in LevelImage', targetBoxCoords);
+
   function handleClick(e) {
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
 
@@ -18,13 +21,14 @@ export default function LevelImage({
   }
 
   return (
-    <div>
+    <div className={style.level__image__container}>
       <img
         data-testid="level-image-1"
         onClick={handleClick}
         src={src || 'https://placehold.co/400'}
         alt={alt}
       />
+      <TargetBox />
     </div>
   );
 }
