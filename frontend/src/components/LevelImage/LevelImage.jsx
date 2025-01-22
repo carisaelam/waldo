@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import { getNormalizedCoordinates } from '../../utils/CoordinateUtils';
 
-export default function LevelImage({ src, alt, onImageClick = () => {} }) {
+export default function LevelImage({
+  src,
+  alt,
+  onImageClick = () => {},
+  targetBoxCoords = [0, 0],
+}) {
+  console.log('targetBoxCoords in LevelImage', targetBoxCoords);
   function handleClick(e) {
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
 
@@ -27,4 +33,5 @@ LevelImage.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string,
   onImageClick: PropTypes.func,
+  targetBoxCoords: PropTypes.array,
 };
