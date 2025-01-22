@@ -6,7 +6,7 @@ function App() {
     <div>
       <h1>Where&rsquo;s Waldo?</h1>
       <LevelImage
-        src={'assets/level-images/level-1.jpg'}
+        src={'/assets/level-images/level-1.jpg'}
         alt={'level 1 image'}
       />
       ;
