@@ -1,9 +1,22 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import * as CoordinateUtils from '../../utils/CoordinateUtils';
 import LevelImage from './LevelImage';
 
+vi.mock('../../utils/CoordinateUtils', () => ({
+  getNormalizedCoordinates: vi.fn(),
+}));
+
+vi.mock('../TargetBox/TargetBox', () => ({
+  default: vi.fn(() => <div data-testid="mock-target-box" />),
+}));
+
 describe('LevelImage component', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   // Component rendering
   it('should render a LevelImage component', () => {
     render(<LevelImage src="level1img.jpg" alt="Level 1 image" />);
@@ -36,27 +49,44 @@ describe('LevelImage component', () => {
     expect(imgElement.src).toEqual('https://placehold.co/400');
   });
 
-  // Click behavior
-  it('should run the handleClick function upon click', async () => {
-    const handleClick = vi.fn();
+  // Call onImageClick
+  it('should call onImageClick with normalized coordinates when clicked', async () => {
+    const onImageClick = vi.fn();
+    CoordinateUtils.getNormalizedCoordinates.mockReturnValue({
+      normalizedX: 0.5,
+      normalizedY: 0.5,
+    });
     render(
-      <img
-        data-testid="level-image-1"
-        src="level1img.jpg"
-        alt="Level 1 image"
-        onClick={handleClick} // Pass the mock function here
-      />
+      <LevelImage src="test.jpg" alt="Test image" onImageClick={onImageClick} />
     );
 
-    const imgElement = screen.getByTestId('level-image-1');
+    const img = screen.getByTestId('level-image-1');
+    await userEvent.click(img);
 
-    const user = userEvent.setup();
-
-    await user.click(imgElement);
-
-    expect(handleClick).toHaveBeenCalled();
+    expect(onImageClick).toHaveBeenCalledWith(0.5, 0.5);
   });
 
-  
-  
+  // Renders targetBox with props
+  it('should render TargetBox with correct props', () => {
+    const targetBoxCoords = [0.5, 0.5];
+    render(
+      <LevelImage src="test.jpg" alt="test" targetBoxCoords={targetBoxCoords} />
+    );
+
+    const targetBox = screen.getByTestId('mock-target-box');
+    expect(targetBox).toBeInTheDocument();
+  });
+
+  it('should not throw error with valid props', () => {
+    expect(() => {
+      render(
+        <LevelImage
+          src="test.jpg"
+          alt="Test image"
+          onImageClick={() => {}}
+          targetBoxCoords={[0, 0]}
+        />
+      );
+    }).not.toThrow();
+  });
 });

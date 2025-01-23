@@ -27,6 +27,7 @@ export default function LevelImage({
         alt={alt}
       />
       <TargetBox
+        data-testid="target-box"
         x={targetBoxCoords[0]}
         y={targetBoxCoords[1]}
         imageRef={imageRef}
