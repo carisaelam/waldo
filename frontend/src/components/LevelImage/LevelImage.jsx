@@ -11,12 +11,9 @@ export default function LevelImage({
   targetBoxCoords = [0, 0],
 }) {
   const imageRef = useRef(null);
+
   function handleClick(e) {
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
-
-    console.log('normalizedX', normalizedX);
-    console.log('normalizedY', normalizedY);
-
     onImageClick(normalizedX, normalizedY);
   }
 
