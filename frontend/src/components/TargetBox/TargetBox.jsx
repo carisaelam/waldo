@@ -24,13 +24,6 @@ export default function TargetBox({ x, y, imageElement }) {
     return () => window.removeEventListener('resize', updateDimensions);
   }, [imageElement, x, y]);
 
-  console.log('Target box x, y', x, y);
-  console.log(
-    'ImageElementSize',
-    imageDimensions.width,
-    imageDimensions.height
-  );
-
   if (
     !imageElement ||
     imageDimensions.width === 0 ||

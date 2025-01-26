@@ -11,7 +11,6 @@ export function getNormalizedCoordinates(e) {
 
   const normalizedX = relativeX / boundingClient.width;
   const normalizedY = relativeY / boundingClient.height;
-  console.log('normalizedX', normalizedX);
 
   return { normalizedX, normalizedY };
 }
