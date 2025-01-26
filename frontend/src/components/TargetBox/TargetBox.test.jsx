@@ -2,86 +2,47 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import TargetBox from './TargetBox';
 
-describe('LevelImage component', () => {
-  // Component rendering
-  it('should render a TargetBox component', () => {
-    render(<TargetBox />);
+describe('TargetBox component', () => {
+  it('should render a TargetBox component when imageElement is provided', () => {
+    const mockImageElement = { offsetWidth: 1000, offsetHeight: 500 };
+    render(<TargetBox x={0.5} y={0.5} imageElement={mockImageElement} />);
     const targetBox = screen.getByTestId('target-box');
-
     expect(targetBox).toBeInTheDocument();
   });
 
-  it('should position TargetBox correctly based on x y', () => {
-    const mockImageRef = {
-      current: {
-        naturalWidth: 1000,
-        naturalHeight: 500,
-      },
-    };
-
-    render(<TargetBox x={500} y={250} imageRef={mockImageRef} />);
+  it('should position TargetBox correctly based on x and y', () => {
+    const mockImageElement = { offsetWidth: 1000, offsetHeight: 500 };
+    render(<TargetBox x={0.5} y={0.5} imageElement={mockImageElement} />);
     const targetBox = screen.getByTestId('target-box');
-
     expect(targetBox).toHaveStyle({
-      top: '50%',
-      left: '50%',
+      top: '250px',
+      left: '500px',
     });
   });
 
-  it('should handle missing imageRef gracefully', () => {
-    render(<TargetBox x={500} y={250} />);
-    const targetBox = screen.getByTestId('target-box');
-
-    expect(targetBox).toHaveStyle({
-      top: 'NaN%',
-      left: 'NaN%',
-    });
-  });
-
-  it('should handle missing x and y gracefully', () => {
-    const mockImageRef = {
-      current: {
-        naturalWidth: 1000,
-        naturalHeight: 500,
-      },
-    };
-
-    render(<TargetBox imageRef={mockImageRef} />);
-    const targetBox = screen.getByTestId('target-box');
-
-    expect(targetBox).toHaveStyle({
-      top: 'NaN%',
-      left: 'NaN%',
-    });
+  it('should not render TargetBox when imageElement is missing', () => {
+    render(<TargetBox x={0.5} y={0.5} />);
+    const targetBox = screen.queryByTestId('target-box');
+    expect(targetBox).not.toBeInTheDocument();
   });
 
   it('should handle zero values for x and y', () => {
-    const mockImageRef = {
-      current: {
-        naturalWidth: 1000,
-        naturalHeight: 500,
-      },
-    };
-    render(<TargetBox x={0} y={0} imageRef={mockImageRef} />);
+    const mockImageElement = { offsetWidth: 1000, offsetHeight: 500 };
+    render(<TargetBox x={0} y={0} imageElement={mockImageElement} />);
     const targetBox = screen.getByTestId('target-box');
     expect(targetBox).toHaveStyle({
-      top: '0%',
-      left: '0%',
+      top: '0px',
+      left: '0px',
     });
   });
 
-  it('should handle values greater than image dimensions', () => {
-    const mockImageRef = {
-      current: {
-        naturalWidth: 1000,
-        naturalHeight: 500,
-      },
-    };
-    render(<TargetBox x={1500} y={750} imageRef={mockImageRef} />);
+  it('should handle values greater than 1 for x and y', () => {
+    const mockImageElement = { offsetWidth: 1000, offsetHeight: 500 };
+    render(<TargetBox x={1.5} y={1.5} imageElement={mockImageElement} />);
     const targetBox = screen.getByTestId('target-box');
     expect(targetBox).toHaveStyle({
-      top: '150%',
-      left: '150%',
+      top: '750px',
+      left: '1500px',
     });
   });
 });

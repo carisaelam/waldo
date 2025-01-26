@@ -1,18 +1,48 @@
 import style from './TargetBox.module.css';
 import PropTypes from 'prop-types';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import { useState, useEffect } from 'react';
 
-export default function TargetBox({ x, y, imageRef }) {
-  const imageWidth = imageRef?.current?.naturalWidth;
-  const imageHeight = imageRef?.current?.naturalHeight;
+export default function TargetBox({ x, y, imageElement }) {
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (imageElement) {
+        const newDimensions = {
+          width: imageElement.offsetWidth,
+          height: imageElement.offsetHeight,
+        };
+        setImageDimensions(newDimensions);
+      }
+    };
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [imageElement, x, y]);
 
   console.log('Target box x, y', x, y);
+  console.log(
+    'ImageElementSize',
+    imageDimensions.width,
+    imageDimensions.height
+  );
 
+  if (
+    !imageElement ||
+    imageDimensions.width === 0 ||
+    imageDimensions.height === 0
+  ) {
+    return null;
+  }
   return (
     <div
       style={{
-        top: `${(y / imageHeight) * 100}%`,
-        left: `${(x / imageWidth) * 100}%`,
+        top: `${y * imageDimensions.height}px`,
+        left: `${x * imageDimensions.width}px`,
       }}
       className={style.target__box}
       data-testid="target-box"
@@ -25,5 +55,5 @@ export default function TargetBox({ x, y, imageRef }) {
 TargetBox.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
-  imageRef: PropTypes.object,
+  imageElement: PropTypes.object,
 };

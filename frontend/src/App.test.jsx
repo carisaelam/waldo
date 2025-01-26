@@ -1,9 +1,17 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('App component', () => {
+  vi.mock('./components/TargetBox/TargetBox', () => ({
+    default: ({ x, y }) => (
+      <div data-testid="target-box" data-x={x} data-y={y}>
+        Mock TargetBox
+      </div>
+    ),
+  }));
+
   // App component renders
   it('renders app component', () => {
     const { container } = render(<App />);
@@ -17,9 +25,9 @@ describe('App component', () => {
   });
 
   it('should update targetBoxCoords state upon click', async () => {
-    const { getByTestId } = render(<App />);
+    render(<App />);
 
-    const image = getByTestId('level-image-1');
+    const image = screen.getByTestId('level-image-1');
 
     const user = userEvent.setup();
     user.click(image);

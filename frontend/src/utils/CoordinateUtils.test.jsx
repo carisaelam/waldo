@@ -20,8 +20,8 @@ describe('getNormalizedCoordinates', () => {
 
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
 
-    expect(normalizedX).toBe(100);
-    expect(normalizedY).toBe(100);
+    expect(normalizedX).toBe(0.5);
+    expect(normalizedY).toBe(0.5);
   });
 
   //Error logging
