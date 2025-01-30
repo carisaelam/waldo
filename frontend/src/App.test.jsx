@@ -20,7 +20,7 @@ describe('App component', () => {
 
   it('renders correct heading', () => {
     render(<App />);
-    const heading = screen.getByRole('heading');
+    const heading = screen.getByRole('heading', { name: /waldo/i });
     expect(heading).toHaveTextContent(/waldo/i);
   });
 
