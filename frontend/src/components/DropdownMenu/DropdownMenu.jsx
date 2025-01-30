@@ -28,6 +28,8 @@ export default function DropdownMenu({
     }
     console.log('result: ', result);
     console.log('updated charInfo', charInfo);
+
+    setSelectedCharacter('');
   }
 
   return (
