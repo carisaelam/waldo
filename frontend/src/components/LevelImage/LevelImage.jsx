@@ -13,6 +13,8 @@ export default function LevelImage({
   const imageRef = useRef(null);
   const [imageElement, setImageElement] = useState(null);
 
+  // console.log('targetBoxCoords:', targetBoxCoords)
+
   useEffect(() => {
     if (imageRef.current) {
       setImageElement(imageRef.current);
@@ -22,6 +24,7 @@ export default function LevelImage({
   function handleClick(e) {
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
     onImageClick(normalizedX, normalizedY);
+    // console.log('normalizedX and Y', normalizedX, normalizedY);
   }
 
   return (

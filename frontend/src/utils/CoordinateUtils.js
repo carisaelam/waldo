@@ -14,3 +14,13 @@ export function getNormalizedCoordinates(e) {
 
   return { normalizedX, normalizedY };
 }
+
+export function compareSelectedAndTarget(selected, target) {
+  if (Math.abs(selected - target) <= 0.2) {
+    console.log('it is a match');
+    return true;
+  } else {
+    console.log('nothing to see here');
+    return false;
+  }
+}

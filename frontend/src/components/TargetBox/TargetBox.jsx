@@ -9,6 +9,7 @@ export default function TargetBox({ x, y, imageElement }) {
     height: 0,
   });
 
+
   useEffect(() => {
     const updateDimensions = () => {
       if (imageElement) {
@@ -40,7 +41,7 @@ export default function TargetBox({ x, y, imageElement }) {
       className={style.target__box}
       data-testid="target-box"
     >
-      <DropdownMenu />
+      <DropdownMenu targetBoxCoords={[x, y]} />
     </div>
   );
 }
