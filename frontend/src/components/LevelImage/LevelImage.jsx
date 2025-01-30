@@ -15,6 +15,8 @@ export default function LevelImage({
   const [imageElement, setImageElement] = useState(null);
   const [levelCharacters, setLevelCharacters] = useState(CHARACTERS.level1);
 
+  const [hasWon, setHasWon] = useState(false);
+
   console.log('levelCharacters: ', levelCharacters);
 
   useEffect(() => {
@@ -30,6 +32,7 @@ export default function LevelImage({
 
   function handleCharacterFound(characterId) {
     console.log('running handleCharacterFound in LevelImage: ', characterId);
+
     setLevelCharacters((prevChars) =>
       prevChars.map((char) =>
         char.id === characterId ? { ...char, isFound: true } : char
@@ -37,8 +40,18 @@ export default function LevelImage({
     );
   }
 
+  useEffect(() => {
+    const allCharactersFound = levelCharacters.every((char) => char.isFound);
+
+    console.log('all characaters, ', levelCharacters);
+
+    console.log('won? ', allCharactersFound);
+
+    allCharactersFound && setHasWon(true);
+  }, [levelCharacters]);
   return (
     <div>
+      <h2 className={hasWon ? style.won : ''}>won?</h2>
       <ul>
         Who is here:
         {levelCharacters.map((char) => {
