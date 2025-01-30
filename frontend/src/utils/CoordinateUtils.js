@@ -16,8 +16,13 @@ export function getNormalizedCoordinates(e) {
 }
 
 export function compareSelectedAndTarget(selected, target) {
-  if (Math.abs(selected - target) <= 0.2) {
+  const THRESHOLD = 0.05;
+  if (
+    Math.abs(selected[0] - target[0]) <= THRESHOLD &&
+    Math.abs(selected[1] - target[1] <= THRESHOLD)
+  ) {
     console.log('it is a match');
+    console.log('selected,target', selected, target);
     return true;
   } else {
     console.log('nothing to see here');

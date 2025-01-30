@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import { useState, useEffect } from 'react';
 
-export default function TargetBox({ x, y, imageElement }) {
+export default function TargetBox({
+  x,
+  y,
+  imageElement,
+  onCharacterFound,
+  levelCharacters,
+}) {
   const [imageDimensions, setImageDimensions] = useState({
     width: 0,
     height: 0,
   });
-
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -41,7 +46,11 @@ export default function TargetBox({ x, y, imageElement }) {
       className={style.target__box}
       data-testid="target-box"
     >
-      <DropdownMenu targetBoxCoords={[x, y]} />
+      <DropdownMenu
+        targetBoxCoords={[x, y]}
+        onCharacterFound={onCharacterFound}
+        levelCharacters={levelCharacters}
+      />
     </div>
   );
 }
@@ -50,4 +59,6 @@ TargetBox.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   imageElement: PropTypes.object,
+  onCharacterFound: PropTypes.func,
+  levelCharacters: PropTypes.array,
 };

@@ -12,7 +12,6 @@ function App() {
       <LevelImage
         src={'/assets/level-images/level-1.jpg'}
         alt={'level 1 image'}
-        // receives normalizedX and normalizedY
         onImageClick={(x, y) => setTargetBoxCoords([x, y])}
         targetBoxCoords={targetBoxCoords}
         imageRef={imageRef}

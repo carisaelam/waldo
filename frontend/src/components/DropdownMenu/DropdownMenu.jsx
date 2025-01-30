@@ -2,44 +2,30 @@ import { useState } from 'react';
 import { compareSelectedAndTarget } from '../../utils/CoordinateUtils';
 import PropTypes from 'prop-types';
 
-export default function DropdownMenu({ targetBoxCoords }) {
-  // eventually will pull character info from backend
-  const CHARACTERS = [
-    {
-      id: 1,
-      name: 'Waldo',
-      normalizedCoords: [0.53, 0.48],
-      isFound: false,
-    },
-    {
-      id: 2,
-      name: 'Odlaw',
-      normalizedCoords: [0.24, 0.48],
-      isFound: false,
-    },
-    {
-      id: 3,
-      name: 'Wizard',
-      normalizedCoords: [0.63, 0.48],
-      isFound: false,
-    },
-  ];
-
+export default function DropdownMenu({
+  targetBoxCoords,
+  onCharacterFound,
+  levelCharacters,
+}) {
   const [selectedCharacter, setSelectedCharacter] = useState('');
 
   function handleSelect(e) {
     setSelectedCharacter(e.target.value);
-    const charInfo = CHARACTERS.find(
+    const charInfo = levelCharacters.find(
       (character) => character.name === e.target.value
     );
+
     console.log('charInfo', charInfo);
     console.log('Selected character: ', e.target.value);
     const result = compareSelectedAndTarget(
-      targetBoxCoords[0],
-      charInfo.normalizedCoords[0]
+      targetBoxCoords,
+      charInfo.normalizedCoords
     );
 
-    charInfo.isFound = true;
+    if (result) {
+      console.log('found... id: ', charInfo.id);
+      onCharacterFound(charInfo.id);
+    }
     console.log('result: ', result);
     console.log('updated charInfo', charInfo);
   }
@@ -56,7 +42,7 @@ export default function DropdownMenu({ targetBoxCoords }) {
           Select
         </option>
 
-        {CHARACTERS.map((character) => {
+        {levelCharacters.map((character) => {
           return (
             <option key={character.id} value={character.name}>
               {character.name}
@@ -70,4 +56,6 @@ export default function DropdownMenu({ targetBoxCoords }) {
 
 DropdownMenu.propTypes = {
   targetBoxCoords: PropTypes.array,
+  levelCharacters: PropTypes.array,
+  onCharacterFound: PropTypes.func,
 };

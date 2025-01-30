@@ -3,6 +3,7 @@ import { getNormalizedCoordinates } from '../../utils/CoordinateUtils';
 import { useRef, useState, useEffect } from 'react';
 import TargetBox from '../TargetBox/TargetBox';
 import style from './LevelImage.module.css';
+import { CHARACTERS } from '../characters';
 
 export default function LevelImage({
   src,
@@ -12,8 +13,9 @@ export default function LevelImage({
 }) {
   const imageRef = useRef(null);
   const [imageElement, setImageElement] = useState(null);
+  const [levelCharacters, setLevelCharacters] = useState(CHARACTERS.level1);
 
-  // console.log('targetBoxCoords:', targetBoxCoords)
+  console.log('levelCharacters: ', levelCharacters);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -24,24 +26,47 @@ export default function LevelImage({
   function handleClick(e) {
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
     onImageClick(normalizedX, normalizedY);
-    // console.log('normalizedX and Y', normalizedX, normalizedY);
+  }
+
+  function handleCharacterFound(characterId) {
+    console.log('running handleCharacterFound in LevelImage: ', characterId);
+    setLevelCharacters((prevChars) =>
+      prevChars.map((char) =>
+        char.id === characterId ? { ...char, isFound: true } : char
+      )
+    );
   }
 
   return (
-    <div className={style.level__image__container}>
-      <img
-        ref={imageRef}
-        data-testid="level-image-1"
-        onClick={handleClick}
-        src={src || 'https://placehold.co/400'}
-        alt={alt}
-      />
-      <TargetBox
-        data-testid="target-box"
-        x={targetBoxCoords[0]}
-        y={targetBoxCoords[1]}
-        imageElement={imageElement}
-      />
+    <div>
+      <ul>
+        Who is here:
+        {levelCharacters.map((char) => {
+          return (
+            <li className={char.isFound ? style.found : ''} key={char.id}>
+              {char.name}
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className={style.level__image__container}>
+        <img
+          ref={imageRef}
+          data-testid="level-image-1"
+          onClick={handleClick}
+          src={src || 'https://placehold.co/400'}
+          alt={alt}
+        />
+        <TargetBox
+          data-testid="target-box"
+          x={targetBoxCoords[0]}
+          y={targetBoxCoords[1]}
+          imageElement={imageElement}
+          onCharacterFound={handleCharacterFound}
+          levelCharacters={levelCharacters}
+        />
+      </div>
     </div>
   );
 }

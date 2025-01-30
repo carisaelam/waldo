@@ -1,3 +1,8 @@
 .level__image__container {
   position: relative;
 }
+
+.found {
+  color: green;
+  font-weight: bold;
+}
