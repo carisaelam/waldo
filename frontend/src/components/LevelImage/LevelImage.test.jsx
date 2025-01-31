@@ -49,6 +49,14 @@ describe('LevelImage component', () => {
     expect(imgElement.src).toEqual('https://placehold.co/400');
   });
 
+  it('should render a list of headshots for characters', () => {
+    render(<LevelImage src="level1img.jpg" alt="Level 1 image" />);
+    const headshots = screen.getAllByTestId(/character-headshot/i);
+
+    expect(headshots.length).toBeGreaterThan(0);
+    expect(headshots[0]).toBeInTheDocument();
+  });
+
   // Call onImageClick
   it('should call onImageClick with normalized coordinates when clicked', async () => {
     const onImageClick = vi.fn();

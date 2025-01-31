@@ -57,7 +57,11 @@ export default function LevelImage({
       <ul className={style.character__headshot__container}>
         {levelCharacters.map((char) => {
           return (
-            <li key={char.id} className={style.character__headshot}>
+            <li
+              data-testid="character-headshot"
+              key={char.id}
+              className={style.character__headshot}
+            >
               <img src={char.img.src} alt={char.img.alt} />
               <p className={char.isFound ? style.found : ''}>{char.name}</p>
             </li>
