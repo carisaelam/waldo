@@ -75,13 +75,18 @@ describe('LevelImage component', () => {
   });
 
   // Renders targetBox with props
-  it('should render TargetBox with correct props', () => {
+  it('should render TargetBox with correct props', async () => {
     const targetBoxCoords = [0.5, 0.5];
+
     render(
       <LevelImage src="test.jpg" alt="test" targetBoxCoords={targetBoxCoords} />
     );
 
-    const targetBox = screen.getByTestId('mock-target-box');
+    const img = screen.getByTestId('level-image-1');
+    await userEvent.click(img);
+
+    const targetBox = await screen.getByTestId('mock-target-box');
+
     expect(targetBox).toBeInTheDocument();
   });
 

@@ -30,7 +30,7 @@ describe('App component', () => {
     const image = screen.getByTestId('level-image-1');
 
     const user = userEvent.setup();
-    user.click(image);
+    await user.click(image);
 
     const targetBoxCoords = screen.getByTestId('target-box');
 

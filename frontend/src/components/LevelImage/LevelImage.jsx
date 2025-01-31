@@ -15,9 +15,14 @@ export default function LevelImage({
   const [imageElement, setImageElement] = useState(null);
   const [levelCharacters, setLevelCharacters] = useState(CHARACTERS.level1);
 
-  const [hasWon, setHasWon] = useState(false)
+  const [hasWon, setHasWon] = useState(false);
+  const [started, setStarted] = useState(false);
 
   console.log('levelCharacters: ', levelCharacters);
+
+  useEffect(() => {
+    console.log('started state changed: ', started);
+  }, [started]);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -27,6 +32,7 @@ export default function LevelImage({
 
   function handleClick(e) {
     const { normalizedX, normalizedY } = getNormalizedCoordinates(e);
+    setStarted(true);
     onImageClick(normalizedX, normalizedY);
   }
 
@@ -38,6 +44,8 @@ export default function LevelImage({
         char.id === characterId ? { ...char, isFound: true } : char
       )
     );
+
+    setStarted(false);
   }
 
   useEffect(() => {
@@ -77,14 +85,16 @@ export default function LevelImage({
           src={src || 'https://placehold.co/400'}
           alt={alt}
         />
-        <TargetBox
-          data-testid="target-box"
-          x={targetBoxCoords[0]}
-          y={targetBoxCoords[1]}
-          imageElement={imageElement}
-          onCharacterFound={handleCharacterFound}
-          levelCharacters={levelCharacters}
-        />
+        {started && targetBoxCoords && (
+          <TargetBox
+            data-testid="target-box"
+            x={targetBoxCoords[0]}
+            y={targetBoxCoords[1]}
+            imageElement={imageElement}
+            onCharacterFound={handleCharacterFound}
+            levelCharacters={levelCharacters}
+          />
+        )}
       </div>
     </div>
   );
