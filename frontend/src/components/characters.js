@@ -32,5 +32,15 @@ export const CHARACTERS = {
         alt: 'wizard-image',
       },
     },
+    {
+      id: 4,
+      name: 'Nada',
+      normalizedCoords: [0.0, 0.0],
+      isFound: false,
+      img: {
+        src: 'https://picsum.photos/200',
+        alt: 'nada-image',
+      },
+    },
   ],
 };

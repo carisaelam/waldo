@@ -15,7 +15,7 @@ export default function LevelImage({
   const [imageElement, setImageElement] = useState(null);
   const [levelCharacters, setLevelCharacters] = useState(CHARACTERS.level1);
 
-  const [hasWon, setHasWon] = useState(false);
+  const [hasWon, setHasWon] = useState(false)
 
   console.log('levelCharacters: ', levelCharacters);
 
