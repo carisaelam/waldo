@@ -50,14 +50,16 @@ export default function LevelImage({
     allCharactersFound && setHasWon(true);
   }, [levelCharacters]);
   return (
-    <div>
-      <h2 className={hasWon ? style.won : ''}>won?</h2>
-      <ul>
-        Who is here:
+    <div className={style.level__image}>
+      <h2 hidden className={hasWon ? style.won : ''}>
+        You won!
+      </h2>
+      <ul className={style.character__headshot__container}>
         {levelCharacters.map((char) => {
           return (
-            <li className={char.isFound ? style.found : ''} key={char.id}>
-              {char.name}
+            <li key={char.id} className={style.character__headshot}>
+              <img src={char.img.src} alt={char.img.alt} />
+              <p className={char.isFound ? style.found : ''}>{char.name}</p>
             </li>
           );
         })}

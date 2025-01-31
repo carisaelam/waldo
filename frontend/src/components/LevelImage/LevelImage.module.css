@@ -1,5 +1,44 @@
+.level__image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .level__image__container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.character__headshot__container {
+  padding-inline-start: 0;
+  display: flex;
+  gap: 1rem;
+  min-width: fit-content;
+  max-width: 20rem;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.character__headshot {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.character__headshot img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100%;
+  box-shadow: 0 0 5px grey;
+}
+
+.character__headshot p {
+  font-weight: bold;
 }
 
 .found {
@@ -9,4 +48,5 @@
 
 .won {
   color: blue;
+  display: block;
 }
