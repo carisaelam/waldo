@@ -12,7 +12,7 @@ vi.mock('../TargetBox/TargetBox', () => ({
   default: vi.fn(() => <div data-testid="mock-target-box" />),
 }));
 
-global.fetch = vi.fn().mockResolvedValue({
+window.fetch = vi.fn().mockResolvedValue({
   json: vi.fn().mockResolvedValue([
     {
       id: 1,
