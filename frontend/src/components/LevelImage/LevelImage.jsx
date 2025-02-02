@@ -37,8 +37,6 @@ export default function LevelImage({
   }
 
   function handleCharacterFound(characterId) {
-    console.log('running handleCharacterFound in LevelImage: ', characterId);
-
     setLevelCharacters((prevChars) =>
       prevChars.map((char) =>
         char.id === characterId ? { ...char, isFound: true } : char
@@ -50,10 +48,6 @@ export default function LevelImage({
 
   useEffect(() => {
     const allCharactersFound = levelCharacters.every((char) => char.isFound);
-
-    console.log('all characaters, ', levelCharacters);
-
-    console.log('won? ', allCharactersFound);
 
     allCharactersFound && setHasWon(true);
   }, [levelCharacters]);
@@ -71,7 +65,10 @@ export default function LevelImage({
               className={style.character__headshot}
             >
               <img src={char.img.src} alt={char.img.alt} />
-              <p className={char.isFound ? style.found : ''}>{char.name}</p>
+              <p className={char.isFound ? style.found : ''}>
+                {char.isFound ? '✅ ' : ''}
+                {char.name}
+              </p>
             </li>
           );
         })}
