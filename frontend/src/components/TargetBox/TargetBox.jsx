@@ -15,6 +15,8 @@ export default function TargetBox({
     height: 0,
   });
 
+  console.log('targetbox level characters', levelCharacters);
+
   useEffect(() => {
     const updateDimensions = () => {
       if (imageElement) {

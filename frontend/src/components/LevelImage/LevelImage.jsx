@@ -13,16 +13,29 @@ export default function LevelImage({
 }) {
   const imageRef = useRef(null);
   const [imageElement, setImageElement] = useState(null);
-  const [levelCharacters, setLevelCharacters] = useState(CHARACTERS.level1);
-
+  const [levelCharacters, setLevelCharacters] = useState([]);
   const [hasWon, setHasWon] = useState(false);
   const [started, setStarted] = useState(false);
 
-  console.log('levelCharacters: ', levelCharacters);
+  const level = 1;
 
   useEffect(() => {
-    console.log('started state changed: ', started);
-  }, [started]);
+    async function fetchCharacters() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/characters?level=${level}`
+        );
+        const data = await response.json();
+        setLevelCharacters(data);
+      } catch (error) {
+        console.error('Error fetching characters: ', error);
+      }
+    }
+
+    fetchCharacters();
+  }, [level]);
+
+  console.log('levelCharacters: ', levelCharacters);
 
   useEffect(() => {
     if (imageRef.current) {

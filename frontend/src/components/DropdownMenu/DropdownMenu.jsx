@@ -10,6 +10,7 @@ export default function DropdownMenu({
   const [selectedCharacter, setSelectedCharacter] = useState('');
 
   function handleSelect(e) {
+    console.log('handleSelect e.target', e.target.value);
     setSelectedCharacter(e.target.value);
     const charInfo = levelCharacters.find(
       (character) => character.name === e.target.value
@@ -17,9 +18,11 @@ export default function DropdownMenu({
 
     console.log('charInfo', charInfo);
     console.log('Selected character: ', e.target.value);
+    console.log('charInfo.normalizedCoords', charInfo.normalizedCoords);
+
     const result = compareSelectedAndTarget(
       targetBoxCoords,
-      charInfo.normalizedCoords
+      charInfo.normalized_coords
     );
 
     if (result) {
