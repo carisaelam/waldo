@@ -12,6 +12,23 @@ vi.mock('../TargetBox/TargetBox', () => ({
   default: vi.fn(() => <div data-testid="mock-target-box" />),
 }));
 
+global.fetch = vi.fn().mockResolvedValue({
+  json: vi.fn().mockResolvedValue([
+    {
+      id: 1,
+      name: 'Character 1',
+      img: { src: 'character1.jpg', alt: 'Character 1' },
+      is_found: false,
+    },
+    {
+      id: 2,
+      name: 'Character 2',
+      img: { src: 'character2.jpg', alt: 'Character 2' },
+      is_found: false,
+    },
+  ]),
+});
+
 describe('LevelImage component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -49,9 +66,9 @@ describe('LevelImage component', () => {
     expect(imgElement.src).toEqual('https://placehold.co/400');
   });
 
-  it('should render a list of headshots for characters', () => {
+  it('should render a list of headshots for characters', async () => {
     render(<LevelImage src="level1img.jpg" alt="Level 1 image" />);
-    const headshots = screen.getAllByTestId(/character-headshot/i);
+    const headshots = await screen.findAllByTestId(/character-headshot/i);
 
     expect(headshots.length).toBeGreaterThan(0);
     expect(headshots[0]).toBeInTheDocument();
