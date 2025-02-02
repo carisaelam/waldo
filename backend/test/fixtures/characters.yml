@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  normalized_coords: 
+  is_found: false
+  img: 
+
+two:
+  name: MyString
+  normalized_coords: 
+  is_found: false
+  img: 
