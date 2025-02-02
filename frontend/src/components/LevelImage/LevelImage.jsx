@@ -3,7 +3,6 @@ import { getNormalizedCoordinates } from '../../utils/CoordinateUtils';
 import { useRef, useState, useEffect } from 'react';
 import TargetBox from '../TargetBox/TargetBox';
 import style from './LevelImage.module.css';
-import { CHARACTERS } from '../characters';
 
 export default function LevelImage({
   src,
@@ -36,6 +35,7 @@ export default function LevelImage({
   }, [level]);
 
   console.log('levelCharacters: ', levelCharacters);
+  console.log('hasWon', hasWon);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -52,23 +52,28 @@ export default function LevelImage({
   function handleCharacterFound(characterId) {
     setLevelCharacters((prevChars) =>
       prevChars.map((char) =>
-        char.id === characterId ? { ...char, isFound: true } : char
+        char.id === characterId ? { ...char, is_found: true } : char
       )
     );
-
-    setStarted(false);
   }
 
   useEffect(() => {
-    const allCharactersFound = levelCharacters.every((char) => char.isFound);
+    if (!started) return;
 
-    allCharactersFound && setHasWon(true);
-  }, [levelCharacters]);
+    const allCharactersFound = levelCharacters.every(
+      (char) => char.is_found === true
+    );
+
+    console.log('allCharactersFound', allCharactersFound);
+
+    if (allCharactersFound) {
+      setHasWon(true);
+    }
+  }, [levelCharacters, started]);
+
   return (
     <div className={style.level__image}>
-      <h2 hidden className={hasWon ? style.won : ''}>
-        You won!
-      </h2>
+      {hasWon && <h2 className={hasWon ? style.won : ''}>You won!</h2>}
       <ul className={style.character__headshot__container}>
         {levelCharacters.map((char) => {
           return (
@@ -78,8 +83,8 @@ export default function LevelImage({
               className={style.character__headshot}
             >
               <img src={char.img.src} alt={char.img.alt} />
-              <p className={char.isFound ? style.found : ''}>
-                {char.isFound ? '✅ ' : ''}
+              <p className={char.is_found ? style.found : ''}>
+                {char.is_found ? '✅ ' : ''}
                 {char.name}
               </p>
             </li>
