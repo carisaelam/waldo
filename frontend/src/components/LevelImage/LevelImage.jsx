@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { getNormalizedCoordinates } from '../../utils/CoordinateUtils';
 import { useRef, useState, useEffect } from 'react';
 import TargetBox from '../TargetBox/TargetBox';
+import { Timer } from '../Timer/Timer';
 import style from './LevelImage.module.css';
 
 export default function LevelImage({
@@ -34,8 +35,8 @@ export default function LevelImage({
     fetchCharacters();
   }, [level]);
 
-  console.log('levelCharacters: ', levelCharacters);
-  console.log('hasWon', hasWon);
+  // console.log('levelCharacters: ', levelCharacters);
+  // console.log('hasWon', hasWon);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -64,7 +65,7 @@ export default function LevelImage({
       (char) => char.is_found === true
     );
 
-    console.log('allCharactersFound', allCharactersFound);
+    // console.log('allCharactersFound', allCharactersFound);
 
     if (allCharactersFound) {
       setHasWon(true);
@@ -73,6 +74,7 @@ export default function LevelImage({
 
   return (
     <div className={style.level__image}>
+      <Timer hasWon={hasWon} />
       {hasWon && <h2 className={hasWon ? style.won : ''}>You won!</h2>}
       <ul className={style.character__headshot__container}>
         {levelCharacters.map((char) => {
