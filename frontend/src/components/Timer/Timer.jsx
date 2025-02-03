@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 export function Timer({ hasWon, onTimerStop }) {
-  const [running, setRunning] = useState(true);
   const [seconds, setSeconds] = useState(0);
-  console.log('hasWon in timer', hasWon);
 
   useEffect(() => {
     if (hasWon) {
