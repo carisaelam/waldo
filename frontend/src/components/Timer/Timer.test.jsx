@@ -14,17 +14,11 @@ describe('Timer component', () => {
     render(<Timer />);
     const timer = screen.getByTestId('timer');
 
-    expect(timer).toHaveTextContent(/running/i);
+    expect(timer).toHaveTextContent(/0/i);
   });
 
   it('should display elapsed time', () => {
     render(<Timer />);
-    const timer = screen.getByTestId('timer');
-    const stopButton = screen.getByRole('button', { name: /stop/i });
-
-    const user = userEvent.setup();
-    user.click(stopButton);
-
-    expect(timer).toHaveTextContent(/stop/i);
+    expect(screen.getByTestId('timer')).toHaveTextContent(/\d+ seconds?/i);
   });
 });

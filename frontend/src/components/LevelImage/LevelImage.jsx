@@ -16,6 +16,7 @@ export default function LevelImage({
   const [levelCharacters, setLevelCharacters] = useState([]);
   const [hasWon, setHasWon] = useState(false);
   const [started, setStarted] = useState(false);
+  const [finalTime, setFinalTime] = useState(null);
 
   const level = 1;
 
@@ -72,10 +73,18 @@ export default function LevelImage({
     }
   }, [levelCharacters, started]);
 
+  function handleTimerStop(time) {
+    setFinalTime(time);
+  }
+
   return (
     <div className={style.level__image}>
-      <Timer hasWon={hasWon} />
-      {hasWon && <h2 className={hasWon ? style.won : ''}>You won!</h2>}
+      <Timer hasWon={hasWon} onTimerStop={handleTimerStop} />
+      {hasWon && (
+        <h2 className={hasWon ? style.won : ''}>
+          You won in {finalTime} seconds
+        </h2>
+      )}
       <ul className={style.character__headshot__container}>
         {levelCharacters.map((char) => {
           return (
