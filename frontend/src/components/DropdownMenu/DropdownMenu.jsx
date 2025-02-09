@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { compareSelectedAndTarget } from '../../utils/CoordinateUtils';
 import PropTypes from 'prop-types';
 
 export default function DropdownMenu({
@@ -9,9 +8,10 @@ export default function DropdownMenu({
 }) {
   const [selectedCharacter, setSelectedCharacter] = useState('');
 
-  function handleSelect(e) {
-    // console.log('handleSelect e.target', e.target.value);
+  async function handleSelect(e) {
+    console.log('handleSelect e.target', e.target.value);
     setSelectedCharacter(e.target.value);
+    console.log('targetBoxCoords:', targetBoxCoords);
     const charInfo = levelCharacters.find(
       (character) => character.name === e.target.value
     );
@@ -20,19 +20,39 @@ export default function DropdownMenu({
     // console.log('Selected character: ', e.target.value);
     // console.log('charInfo.normalizedCoords', charInfo.normalizedCoords);
 
-    const result = compareSelectedAndTarget(
-      targetBoxCoords,
-      charInfo.normalized_coords
-    );
+    try {
+      const response = await fetch('http://localhost:3000/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          character_name: e.target.value,
+          x: targetBoxCoords[0],
+          y: targetBoxCoords[1],
+          level: charInfo.level,
+        }),
+      });
 
-    if (result) {
-      // console.log('found... id: ', charInfo.id);
-      onCharacterFound(charInfo.id);
+      if (!response.ok) {
+        throw new Error('Network response not ok');
+      }
+
+      const data = await response.json();
+
+      console.log('data', data);
+
+      if (data.success) {
+        onCharacterFound(charInfo.id);
+        console.log('character foudn CORRECTLY');
+      } else {
+        console.log('WRONG. Not the character.');
+      }
+    } catch (error) {
+      console.error('Error verifying selection: ', error);
+    } finally {
+      setSelectedCharacter('');
     }
-    // console.log('result: ', result);
-    // console.log('updated charInfo', charInfo);
-
-    setSelectedCharacter('');
   }
 
   return (
