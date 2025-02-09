@@ -78,16 +78,19 @@ export default function LevelImage({
   }
 
   return (
-    <div className={style.level__image}>
+    <>
       <div className={style.level__image__header}>
-        <h1 data-testid="title">Where&rsquo;s Waldo?</h1>
-
+        <h1 className={style.header} data-testid="title">
+          Where&rsquo;s Waldo?
+        </h1>
         <Timer hasWon={hasWon} onTimerStop={handleTimerStop} />
         {hasWon && (
           <h2 className={hasWon ? style.won : ''}>
             You won in {finalTime} seconds
           </h2>
         )}
+      </div>
+      <div className={style.level__image}>
         <ul className={style.character__headshot__container}>
           {levelCharacters.map((char) => {
             return (
@@ -105,28 +108,28 @@ export default function LevelImage({
             );
           })}
         </ul>
-      </div>
 
-      <div className={style.level__image__container}>
-        <img
-          ref={imageRef}
-          data-testid="level-image-1"
-          onClick={handleClick}
-          src={src || 'https://placehold.co/400'}
-          alt={alt}
-        />
-        {started && targetBoxCoords && (
-          <TargetBox
-            data-testid="target-box"
-            x={targetBoxCoords[0]}
-            y={targetBoxCoords[1]}
-            imageElement={imageElement}
-            onCharacterFound={handleCharacterFound}
-            levelCharacters={levelCharacters}
+        <div className={style.level__image__container}>
+          <img
+            ref={imageRef}
+            data-testid="level-image-1"
+            onClick={handleClick}
+            src={src || 'https://placehold.co/400'}
+            alt={alt}
           />
-        )}
+          {started && targetBoxCoords && (
+            <TargetBox
+              data-testid="target-box"
+              x={targetBoxCoords[0]}
+              y={targetBoxCoords[1]}
+              imageElement={imageElement}
+              onCharacterFound={handleCharacterFound}
+              levelCharacters={levelCharacters}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

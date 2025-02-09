@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.header {
+  font-size: 2rem;
+}
+
 .level__image__header {
   min-width: 100%;
   display: flex;
@@ -61,4 +65,24 @@
 .won {
   color: blue;
   display: block;
+}
+
+@media (min-width: 768px) {
+  .level__image {
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    padding: 1rem;
+  }
+
+  .level__image__header {
+    min-width: fit-content;
+    padding: 1rem;
+  }
+
+  .character__headshot__container {
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
 }
