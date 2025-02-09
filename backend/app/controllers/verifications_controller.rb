@@ -13,6 +13,11 @@ class VerificationsController < ApplicationController
 
   def perform_verification(params)
     puts 'performing verification'
-    { success: true, error: nil}
+    
+    if params[:test] == 'invalid' 
+     { success: false, error: 'Invalid'}
+    else
+      {success: true, error: nil}
+    end
   end
 end
