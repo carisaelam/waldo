@@ -68,7 +68,7 @@ export default function DropdownMenu({
         </option>
 
         {levelCharacters.map((character) => {
-          if (character.isFound) return '';
+          if (character.is_found) return '';
           return (
             <option key={character.id} value={character.name}>
               {character.name}
