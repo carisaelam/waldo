@@ -79,29 +79,33 @@ export default function LevelImage({
 
   return (
     <div className={style.level__image}>
-      <Timer hasWon={hasWon} onTimerStop={handleTimerStop} />
-      {hasWon && (
-        <h2 className={hasWon ? style.won : ''}>
-          You won in {finalTime} seconds
-        </h2>
-      )}
-      <ul className={style.character__headshot__container}>
-        {levelCharacters.map((char) => {
-          return (
-            <li
-              data-testid="character-headshot"
-              key={char.id}
-              className={style.character__headshot}
-            >
-              <img src={char.img.src} alt={char.img.alt} />
-              <p className={char.is_found ? style.found : ''}>
-                {char.is_found ? '✅ ' : ''}
-                {char.name}
-              </p>
-            </li>
-          );
-        })}
-      </ul>
+      <div className={style.level__image__header}>
+        <h1 data-testid="title">Where&rsquo;s Waldo?</h1>
+
+        <Timer hasWon={hasWon} onTimerStop={handleTimerStop} />
+        {hasWon && (
+          <h2 className={hasWon ? style.won : ''}>
+            You won in {finalTime} seconds
+          </h2>
+        )}
+        <ul className={style.character__headshot__container}>
+          {levelCharacters.map((char) => {
+            return (
+              <li
+                data-testid="character-headshot"
+                key={char.id}
+                className={style.character__headshot}
+              >
+                <img src={char.img.src} alt={char.img.alt} />
+                <p className={char.is_found ? style.found : ''}>
+                  {char.is_found ? '✅ ' : ''}
+                  {char.name}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
 
       <div className={style.level__image__container}>
         <img

@@ -16,3 +16,8 @@
 h1 {
   text-align: center;
 }
+
+.level__image__header {
+  position: sticky;
+  top: 0;
+}

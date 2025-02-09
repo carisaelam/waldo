@@ -5,6 +5,18 @@
   align-items: center;
 }
 
+.level__image__header {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
 .level__image__container {
   position: relative;
   display: flex;
